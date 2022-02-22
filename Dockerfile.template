@@ -1,0 +1,33 @@
+# FROM balenalib/%%BALENA_ARCH%%
+
+FROM openwrtorg/rootfs:armvirt-64-19.07.7 as builder
+
+# source: https://github.com/oofnikj/docker-openwrt/blob/master/Dockerfile
+RUN mkdir -p /var/lock
+
+RUN opkg update && \
+    opkg install \
+    ubus \
+    luci \
+    wpad-wolfssl \
+    iw-full \
+    ip-full \
+    kmod-mac80211 \
+    dnsmasq \
+    iptables-mod-checksum
+
+# WORKDIR /usr/src/app
+
+# COPY start.sh ./
+
+# RUN chmod +x start.sh
+
+# ENTRYPOINT [ "/sbin/init" ]
+
+EXPOSE 80
+
+# CMD ["sh", "./start.sh"]
+
+CMD [ "/sbin/init" ]
+
+
